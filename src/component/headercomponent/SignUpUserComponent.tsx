@@ -3,7 +3,7 @@ import { string } from 'prop-types';
 import axios from 'axios';
 
 
-export default class CreateUserComponent extends React.Component<{}, any>{
+export default class CreateUserComponent extends React.Component<any, any>{
 
     constructor(props: any) {
         super(props);
@@ -21,16 +21,13 @@ export default class CreateUserComponent extends React.Component<{}, any>{
 
     private handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         this.setState({ [event.target.name]: event.target.value });
-        //alert("State of name is now " + this.state.username);
     }
 
     private handleSubmit(event: any) {
         event.preventDefault();
         axios.post("http://localhost:8080/add-user", this.state)
-            .then(function (response) {
-                //TODO: Mark user as signed in 
-            })
             .catch(error => alert(error));
+        this.props.setLoggedInState(true);
     }
 
     render() {
@@ -46,7 +43,7 @@ export default class CreateUserComponent extends React.Component<{}, any>{
                     <input name="password" type="password" placeholder="Confirm selected password" onChange={this.handleChange} /> <br />
                     <button name="createUser">Create User</button><br />
                 </form>
-                <button name="signInUser">Sign In</button><br />
+                <button name="cancel" onClick={this.props.cancel}>Cancel</button><br />
             </div>
         );
     }

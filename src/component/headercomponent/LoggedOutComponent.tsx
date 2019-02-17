@@ -1,55 +1,56 @@
 import * as React from 'react';
-import axios from 'axios';
-import CreateUserComponent from './CreateUserComponent';
+import CreateUserComponent from './SignUpUserComponent';
+import SignInUserComponent from './SignInUserComponent';
 
 
-export default class LoggedOutComponent extends React.Component<{}, any>{
+export default class LoggedOutComponent extends React.Component<any, any>{
 
     constructor(props: any) {
         super(props);
         this.state = {
             username: '',
-            password: '',
-            isSignInMode: false
+            isSignInMode: false,
+            showButtons: true
         }
-        this.handleChange = this.handleChange.bind(this);
+        this.switchToSignIn = this.switchToSignIn.bind(this);
+        this.switchToSignUp = this.switchToSignUp.bind(this);
+        this.switchToButtons = this.switchToButtons.bind(this);
     }
 
-    public signInUser() {
-        axios.post("http://localhost:8080/sign-in-user", {
-            "password": this.state.password,
-            "username": this.state.username
+    private switchToButtons() {
+        this.setState({
+            showButtons: true
         })
-            .then(response => { alert(response.data) })
-            .catch(error => alert(error));
     }
 
-    private handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        let change = {};
-        change[event.target.name] = event.target.value;
-        this.setState(change);
-        alert("State of name is now " + this.state.username);
+    private switchToSignIn() {
+        this.setState({
+            isSignInMode: true,
+            showButtons: false
+        });
     }
 
- 
-    private signInForm() {
-        return (
-            <div>
-                <h1>Placeholder LoggedOut</h1>
-                <form>
-                    <input name="username" type="text" placeholder="Enter username..." onChange={this.handleChange} />
-                    <input name="password" type="password" placeholder="Enter password..." onChange={this.handleChange} />
-                </form>
-            </div>
-        );
+    private switchToSignUp() {
+        this.setState({
+            isSignInMode: false,
+            showButtons: false
+        })
     }
 
-    render(){
-        if(this.state.isSignInMode){
-            return(this.signInForm());
+    render() {
+        if (this.state.showButtons) {
+            return (
+                <div>
+                    <button name="signUp" onClick={this.switchToSignUp}>Sign-Up User</button><br />
+                    <button name="signIn" onClick={this.switchToSignIn}>Sign-In User</button>
+                </div>
+            );
         }
-        else{
-            return(<CreateUserComponent />);
+        else if (this.state.isSignInMode) {
+            return (<SignInUserComponent setLoggedInState={this.props.setLoggedInState} cancel={this.switchToButtons} />);
+        }
+        else {
+            return (<CreateUserComponent setLoggedInState={this.props.setLoggedInState} cancel={this.switchToButtons} />);
         }
     }
 }
