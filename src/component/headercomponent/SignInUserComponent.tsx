@@ -22,8 +22,17 @@ export default class SignInUserComponent extends React.Component<any, any>{
 
     private handleSubmit(event: any) {
         event.preventDefault();
-        axios.post("http://localhost:8080/sign-in-user", this.state)
-            .catch(error => alert(error));
+        alert(this.state.username + " and password " + this.state.password);
+        axios.get("http://localhost:8080/sign-in-user", {
+            params: {
+                username: this.state.username,
+                password: this.state.password
+            }
+        })
+            .then(function (response) {
+                alert("Found user and can sign in!"+response);
+            })
+            .catch(error => alert("ERRRROR" + error))
         this.props.setLoggedInState(true);
     }
 

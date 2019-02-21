@@ -14,18 +14,25 @@ export default class HeaderComponent extends React.Component<{}, any>{
             username: ''
         };
         this.toggleLoggedInState = this.toggleLoggedInState.bind(this);
+        this.setUsername = this.setUsername.bind(this);
     }
 
-    toggleLoggedInState(newState : boolean){
-        this.setState({isLoggedIn : newState});
+    toggleLoggedInState(newState: boolean) {
+        this.setState({ isLoggedIn: newState });
+    }
+
+    setUsername(username: string) {
+        this.setState({ username: username });
     }
 
     render() {
         if (this.state.isLoggedIn) {
-            return (<LoggedInComponent setLoggedInState={this.toggleLoggedInState} />);
+            return (<LoggedInComponent setLoggedInState={this.toggleLoggedInState}
+                updateUsername={this.setUsername} />);
         }
         else {
-            return (<LoggedOutComponent setLoggedInState={this.toggleLoggedInState}/>);
+            return (<LoggedOutComponent setLoggedInState={this.toggleLoggedInState}
+                updateUsername={this.setUsername} />);
         }
     }
 }

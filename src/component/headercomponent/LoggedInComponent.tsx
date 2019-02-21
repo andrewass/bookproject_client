@@ -2,8 +2,14 @@ import * as React from 'react';
 
 export default class LoggedInComponent extends React.Component<any, any>{
 
+    constructor(props : any){
+        super(props);
+
+        this.logOut = this.logOut.bind(this);
+    }
+
     private logOut(event : any){
-        alert("Button clicked! Now logging out");
+        this.props.setLoggedInState(false);
     }
 
     render() {
