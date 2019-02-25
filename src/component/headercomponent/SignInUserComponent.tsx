@@ -29,11 +29,12 @@ export default class SignInUserComponent extends React.Component<any, any>{
                 password: this.state.password
             }
         })
-            .then(function (response) {
-                alert("Found user and can sign in!"+response);
+            .then(response => {
+                this.props.setUsername(this.state.username);
+                this.props.setLoggedInState(true);
             })
-            .catch(error => alert("ERRRROR" + error))
-        this.props.setLoggedInState(true);
+            .catch(error => alert(error))
+
     }
 
     render() {

@@ -27,12 +27,11 @@ export default class HeaderComponent extends React.Component<{}, any>{
 
     render() {
         if (this.state.isLoggedIn) {
-            return (<LoggedInComponent setLoggedInState={this.toggleLoggedInState}
-                updateUsername={this.setUsername} />);
+            alert("rendering logged in with user "+this.state.username);
+            return (<LoggedInComponent setLoggedInState={this.toggleLoggedInState} signedInUser={this.state.username} />);
         }
         else {
-            return (<LoggedOutComponent setLoggedInState={this.toggleLoggedInState}
-                updateUsername={this.setUsername} />);
+            return (<LoggedOutComponent setLoggedInState={this.toggleLoggedInState} setUsername={this.setUsername} />);
         }
     }
 }

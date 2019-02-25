@@ -15,7 +15,7 @@ export default class LoggedInComponent extends React.Component<any, any>{
     render() {
         return (
             <div>
-                <h1>Placeholder LoggedIn</h1>
+                <h1>Placeholder LoggedIn - Logged in as user {this.props.signedInUser}</h1>
                 <button onClick={this.logOut}>Log Out</button>
             </div>
         );

@@ -47,10 +47,10 @@ export default class LoggedOutComponent extends React.Component<any, any>{
             );
         }
         else if (this.state.isSignInMode) {
-            return (<SignInUserComponent setLoggedInState={this.props.setLoggedInState} cancel={this.switchToButtons} />);
+            return (<SignInUserComponent setLoggedInState={this.props.setLoggedInState} cancel={this.switchToButtons} setUsername={this.props.setUsername} />);
         }
         else {
-            return (<CreateUserComponent setLoggedInState={this.props.setLoggedInState} cancel={this.switchToButtons} />);
+            return (<CreateUserComponent setLoggedInState={this.props.setLoggedInState} cancel={this.switchToButtons} setUsername={this.props.setUsername} />);
         }
     }
 }
