@@ -3,12 +3,9 @@ import LoggedInComponent from './LoggedInComponent';
 import LoggedOutComponent from './LoggedOutComponent';
 
 
-interface IHeaderState {
-    isLoggedIn: boolean;
-    username: string;
-}
 
-export default class HeaderComponent extends React.Component<{}, IHeaderState>{
+
+export default class HeaderComponent extends React.Component<{}, any>{
 
     constructor(props: any) {
         super(props);
@@ -16,16 +13,25 @@ export default class HeaderComponent extends React.Component<{}, IHeaderState>{
             isLoggedIn: false,
             username: ''
         };
+        this.toggleLoggedInState = this.toggleLoggedInState.bind(this);
+        this.setUsername = this.setUsername.bind(this);
+    }
+
+    toggleLoggedInState(newState: boolean) {
+        this.setState({ isLoggedIn: newState });
+    }
+
+    setUsername(username: string) {
+        this.setState({ username: username });
     }
 
     render() {
         if (this.state.isLoggedIn) {
-            return (
-                <div>
-                    <LoggedInComponent />
-                </div>
-            );
+            alert("rendering logged in with user "+this.state.username);
+            return (<LoggedInComponent setLoggedInState={this.toggleLoggedInState} signedInUser={this.state.username} />);
         }
-        return (<LoggedOutComponent />);
+        else {
+            return (<LoggedOutComponent setLoggedInState={this.toggleLoggedInState} setUsername={this.setUsername} />);
+        }
     }
 }

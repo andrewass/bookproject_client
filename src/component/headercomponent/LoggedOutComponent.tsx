@@ -1,54 +1,56 @@
 import * as React from 'react';
-import axios from 'axios';
+import CreateUserComponent from './SignUpUserComponent';
+import SignInUserComponent from './SignInUserComponent';
 
 
-interface LoggedOutState{
-    password : string;
-    username : string;
-    email : string
-}
+export default class LoggedOutComponent extends React.Component<any, any>{
 
-export default class LoggedOutComponent extends React.Component<{}, LoggedOutState>{
-
-    constructor(props : any){
+    constructor(props: any) {
         super(props);
         this.state = {
-            username : '',
-            password : '',
-            email : ''
+            username: '',
+            isSignInMode: false,
+            showButtons: true
         }
+        this.switchToSignIn = this.switchToSignIn.bind(this);
+        this.switchToSignUp = this.switchToSignUp.bind(this);
+        this.switchToButtons = this.switchToButtons.bind(this);
     }
 
-    public createUser() {
-        axios.post("http://localhost:8080/add-user", {
-            "password": this.state.password,
-            "username": this.state.username
+    private switchToButtons() {
+        this.setState({
+            showButtons: true
         })
-            .catch(error => alert(error));
-        this.resetForm();
     }
 
-    public signInUser() {
-        axios.post("http://localhost:8080/sign-in-user", {
-            "password": this.state.password,
-            "username": this.state.username
+    private switchToSignIn() {
+        this.setState({
+            isSignInMode: true,
+            showButtons: false
+        });
+    }
+
+    private switchToSignUp() {
+        this.setState({
+            isSignInMode: false,
+            showButtons: false
         })
-        .then(response => {alert(response.data)})
-            .catch(error => alert(error));
-        this.resetForm();
     }
 
     render() {
-        return (
-            <div>
-                <h1>Placeholder LoggedOut</h1>
-            </div>
-        );
-    }
-    private resetForm() {
-        this.setState({
-            password: '',
-            username: ''
-        });
+        if (this.state.showButtons) {
+            return (
+                <div>
+                    <button name="signUp" onClick={this.switchToSignUp}>Sign-Up User</button><br />
+                    <button name="signIn" onClick={this.switchToSignIn}>Sign-In User</button>
+                </div>
+            );
+        }
+        else if (this.state.isSignInMode) {
+            return (<SignInUserComponent setLoggedInState={this.props.setLoggedInState} cancel={this.switchToButtons} setUsername={this.props.setUsername} />);
+        }
+        else {
+            return (<CreateUserComponent setLoggedInState={this.props.setLoggedInState} cancel={this.switchToButtons} setUsername={this.props.setUsername} />);
+        }
     }
 }
