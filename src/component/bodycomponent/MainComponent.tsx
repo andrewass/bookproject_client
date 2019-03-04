@@ -1,10 +1,10 @@
 import * as React from 'react';
-
+import RecentlyAddedBooksComponent from './RecentlyAddedBooksComponent'
 export default class MainComponent extends React.Component<{}, {}>{
 
     render(){
         return(
-            <h1>Placeholder Body</h1>
+            <RecentlyAddedBooksComponent count={20} />
         );
     }
 }

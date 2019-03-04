@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './App.css';
 import HeaderComponent from './component/headercomponent/HeadComponent';
-import MainComponent from './component/MainComponent';
+import MainComponent from './component/bodycomponent/MainComponent';
 
 class App extends React.Component {
 
