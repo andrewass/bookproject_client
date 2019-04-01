@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as React from "react";
+import { Link } from 'react-router-dom';
 
 
 export default class RecentlyAddedBooksComponent extends React.Component<any, any>{
@@ -22,7 +23,7 @@ export default class RecentlyAddedBooksComponent extends React.Component<any, an
                     books: response.data
                 })
             })
-            .catch(error => alert("Failed getting books" + error))
+            .catch(error => alert("Failed getting books " + error))
     }
 
     render() {
@@ -31,9 +32,11 @@ export default class RecentlyAddedBooksComponent extends React.Component<any, an
             <div>
                 <h1>Recently added books</h1>
                 {books.map((book: any) =>
-                    <div>
-                        <img src={book.imageUrl} alt={book.title} />
-                        <h3>{book.title}</h3>
+                    <div key={book.id}>
+                        <Link to={`/book/${book.id}`} >
+                            <img src={book.imageUrl} alt={book.title} />
+                            <h3>{book.title}</h3>
+                        </Link>
                     </div>
                 )}
             </div>
