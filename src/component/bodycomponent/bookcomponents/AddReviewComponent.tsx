@@ -12,25 +12,20 @@ export default class AddReviewComponent extends React.Component<any, any>{
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-
-
     private handleSubmit(event: any) {
         event.preventDefault();
         axios.post("http://localhost:8080/add-book-review", {
-          review: this.state.review,
-          title: this.props.title,
-          userId: null,
-          stars: 4
+            review: this.state.review,
+            title: this.props.title,
+            userId: null,
+            stars: 4
         })
             .catch(error => alert(error));
     }
 
-   
-
     handleChange(event: any) {
         this.setState({ review: event.target.value });
     }
-
 
     render() {
         return (
